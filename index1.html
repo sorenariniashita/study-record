@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勉強記録アプリ</title>
+    <style>
+        /* CSS スタイルはここに記述 */
+    </style>
+</head>
+<body>
+    <h1>勉強記録アプリ</h1>
+    <form id="study-form">
+        <label for="activity">勉強した内容：</label>
+        <input type="text" id="activity" name="activity" required><br><br>
+        <label for="date">日付：</label>
+        <input type="date" id="date" name="date" required><br><br>
+        <label for="time">勉強時間（分）：</label>
+        <input type="number" id="time" name="time" min="1" required><br><br>
+        <button type="submit">記録する</button>
+    </form>
+
+    <script>
+        document.getElementById('study-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // デフォルトのフォーム送信を停止
+
+            // フォームの入力値を取得
+            var activity = document.getElementById('activity').value;
+            var date = document.getElementById('date').value;
+            var time = document.getElementById('time').value;
+
+            // データをサーバーに送信するためのリクエストを作成（バックエンドのエンドポイントに送信する処理が必要）
+            var request = new XMLHttpRequest();
+            request.open('POST', 'http://example.com/api/record', true);
+            request.setRequestHeader('Content-Type', 'application/json');
+
+            // リクエスト本文を作成
+            var data = {
+                activity: activity,
+                date: date,
+                time: time
+            };
+
+            // リクエストを送信
+            request.send(JSON.stringify(data));
+
+            // レスポンスを受け取った後の処理（エラーハンドリングなどが必要）
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    // 成功時の処理
+                    alert('記録が保存されました！');
+                } else {
+                    // エラー時の処理
+                    alert('エラーが発生しました。もう一度お試しください。');
+                }
+            };
+        });
+    </script>
+</body>
+</html>
